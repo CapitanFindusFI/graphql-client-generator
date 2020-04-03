@@ -1,0 +1,27 @@
+{
+  "name": "graphql-client-generator",
+  "version": "1.0.0",
+  "description": "Utility class to generate GraphQL queries or mutations to be used within an API client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CapitanFindusFI/graphql-client-generator.git"
+  },
+  "keywords": [
+    "typescript",
+    "graphql"
+  ],
+  "author": {
+    "name": "Andrea Martini",
+    "email": "am95.dev@gmail.com",
+    "url": "https://capitanfind.us"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CapitanFindusFI/graphql-client-generator/issues"
+  },
+  "homepage": "https://github.com/CapitanFindusFI/graphql-client-generator#readme"
+}
