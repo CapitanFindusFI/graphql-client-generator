@@ -19,10 +19,12 @@ const generateParameterAlias = (param: IGraphQLParam) => {
     return alias ? alias : `$${name}`;
 };
 
-const generateQueryRequest = (requests: IGraphQLQueryRequest[]) => {
+const generateQueryRequest = (requests: IGraphQLQueryRequest[]): string => {
     const requestParams = extractRequestsParameters(requests);
     const queryHeader = generateQueryHeader(requestParams);
     const queryFragments = generateQueryFragments(requests);
+
+    return `${queryHeader}{\n${queryFragments}}`;
 };
 
 const generateQueryHeader = (params: IGraphQLParam[]) => {
