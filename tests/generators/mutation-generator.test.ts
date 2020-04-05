@@ -1,4 +1,4 @@
-import {IGraphQLRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLRequest} from "../../src/interfaces/graphql-request.interface";
 import {ValidationError} from "../../src/exceptions/validation.error";
 import GraphqlMutationGenerator from "../../src/generator/graphql-mutation.generator";
 
@@ -6,7 +6,7 @@ const generator = new GraphqlMutationGenerator();
 
 describe('mutation generator class test suite', () => {
     it('should correctly create a graph mutation with a simple request without params', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentFields: ['id', 'name', 'surname']
         }];
@@ -15,7 +15,7 @@ describe('mutation generator class test suite', () => {
     });
 
     it('should correctly generate a graph mutation with multiple fragments', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentFields: ['id', 'name', 'surname']
         }, {
@@ -27,7 +27,7 @@ describe('mutation generator class test suite', () => {
     });
 
     it('should throw an error for incorrect values', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 alias: '$id',
@@ -42,7 +42,7 @@ describe('mutation generator class test suite', () => {
     });
 
     it('should throw an error for missing values', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 alias: '$id',

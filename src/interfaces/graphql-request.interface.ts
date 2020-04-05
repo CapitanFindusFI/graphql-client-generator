@@ -1,25 +1,25 @@
 import {GraphQLValue} from "../types";
 
-export interface IGraphQLRequest {
+export interface GraphQLRequest {
     fragmentName: string;
-    fragmentParams?: IGraphQLParam[];
+    fragmentParams?: GraphQLParam[];
     fragmentFields: string[];
     fragmentValues?: GraphQLValue;
 }
 
-export interface IGraphQLParam {
+export interface GraphQLParam {
     name: string;
     alias?: string;
     type: string;
 }
 
-export interface IGraphQLQueryRequest extends IGraphQLRequest {
-    fragmentParams?: IGraphQLParam[];
+export interface GraphQLQueryRequest extends GraphQLRequest {
+    fragmentParams?: GraphQLParam[];
     fragmentFields: string[];
     fragmentValues?: GraphQLValue;
 }
 
-export interface IGraphQLMutationRequest extends IGraphQLRequest {
-    fragmentParams?: IGraphQLParam[];
+export interface GraphQLMutationRequest extends GraphQLRequest {
+    fragmentParams?: GraphQLParam[];
     fragmentValues?: GraphQLValue;
 }

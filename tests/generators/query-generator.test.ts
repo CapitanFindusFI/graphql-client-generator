@@ -1,4 +1,4 @@
-import {IGraphQLRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLRequest} from "../../src/interfaces/graphql-request.interface";
 import GraphqlQueryGenerator from "../../src/generator/graphql-query.generator";
 import {ValidationError} from "../../src/exceptions/validation.error";
 
@@ -6,7 +6,7 @@ const generator = new GraphqlQueryGenerator();
 
 describe('query generator class test suite', () => {
     it('should correctly create a graph query with a simple request without params', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentFields: ['id', 'name', 'surname']
         }];
@@ -15,7 +15,7 @@ describe('query generator class test suite', () => {
     });
 
     it('should correctly generate a graph query with multiple fragments', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentFields: ['id', 'name', 'surname']
         }, {
@@ -27,7 +27,7 @@ describe('query generator class test suite', () => {
     });
 
     it('should throw an error for incorrect values', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 alias: '$id',
@@ -42,7 +42,7 @@ describe('query generator class test suite', () => {
     });
 
     it('should throw an error for missing values', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 alias: '$id',

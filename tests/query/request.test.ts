@@ -1,9 +1,9 @@
-import {IGraphQLQueryRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLQueryRequest} from "../../src/interfaces/graphql-request.interface";
 import {generateQueryRequest} from "../utils";
 
 describe('query request generator test suite', () => {
     it('should generate a full query with a single request', () => {
-        const requests: IGraphQLQueryRequest[] = [{
+        const requests: GraphQLQueryRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 name: 'id',
@@ -19,7 +19,7 @@ describe('query request generator test suite', () => {
     });
 
     it('should generate a full query with multiple requests', () => {
-        const requests: IGraphQLQueryRequest[] = [{
+        const requests: GraphQLQueryRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 name: 'id',

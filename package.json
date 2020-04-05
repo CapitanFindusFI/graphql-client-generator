@@ -4,7 +4,7 @@
   "description": "Utility class to generate GraphQL queries or mutations to be used within an API client",
   "main": "index.js",
   "scripts": {
-    "lint": "tslint -p tsconfig.json",
+    "lint": "eslint '*/**/*.{js,ts,tsx}'",
     "test": "jest --config jestconfig.json",
     "coverage": "jest --config jestconfig.json --coverage",
     "build": "tsc"

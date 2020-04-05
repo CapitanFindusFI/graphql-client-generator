@@ -1,9 +1,9 @@
-import {IGraphQLRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLRequest} from "../../src/interfaces/graphql-request.interface";
 import {generateQueryRequest} from "../utils";
 
 describe('query generator error test suite', () => {
     it('should throw an error for missing parameter name', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 alias: '$id',
@@ -17,7 +17,7 @@ describe('query generator error test suite', () => {
     });
 
     it('should throw an error for missing type', () => {
-        const requests: IGraphQLRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{
                 alias: '$id',

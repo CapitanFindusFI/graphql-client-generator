@@ -1,4 +1,4 @@
-import {IGraphQLParam, IGraphQLQueryRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLParam, GraphQLQueryRequest} from "../../src/interfaces/graphql-request.interface";
 import {generateFragmentHeader, generateQueryFragments} from "../utils";
 
 describe('query fragments generator test suite', () => {
@@ -8,7 +8,7 @@ describe('query fragments generator test suite', () => {
     });
 
     it('should correctly generate a fragment header with a single param', () => {
-        const params: IGraphQLParam[] = [{
+        const params: GraphQLParam[] = [{
             name: 'id',
             type: 'String'
         }];
@@ -17,7 +17,7 @@ describe('query fragments generator test suite', () => {
     });
 
     it('should correctly generate multiple fragment headers', () => {
-        const requests: IGraphQLQueryRequest[] = [{
+        const requests: GraphQLQueryRequest[] = [{
             fragmentName: 'users',
             fragmentFields: []
         }, {

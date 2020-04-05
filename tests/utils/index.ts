@@ -1,9 +1,9 @@
-import {IGraphQLParam, IGraphQLRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLParam, GraphQLRequest} from "../../src/interfaces/graphql-request.interface";
 import {GraphQLField} from "../../src/types";
 import _ = require('lodash');
 
-const extractRequestsParameters = (requests: IGraphQLRequest[]) => {
-    return requests.reduce((params: IGraphQLParam[], request: IGraphQLRequest) => {
+const extractRequestsParameters = (requests: GraphQLRequest[]) => {
+    return requests.reduce((params: GraphQLParam[], request: GraphQLRequest) => {
         const {fragmentParams} = request;
         if (!_.isUndefined(fragmentParams) && fragmentParams.length) {
             return params.concat(...fragmentParams);
@@ -13,14 +13,14 @@ const extractRequestsParameters = (requests: IGraphQLRequest[]) => {
     }, []);
 };
 
-const generateParameterAlias = (param: IGraphQLParam) => {
+const generateParameterAlias = (param: GraphQLParam) => {
     const {name, alias} = param;
     if (!name) throw new Error('Missing required param name');
 
     return alias ? alias : `$${name}`;
 };
 
-const generateQueryRequest = (requests: IGraphQLRequest[]): string => {
+const generateQueryRequest = (requests: GraphQLRequest[]): string => {
     const requestParams = extractRequestsParameters(requests);
     const queryHeader = generateQueryHeader(requestParams);
     const queryFragments = generateQueryFragments(requests);
@@ -28,26 +28,26 @@ const generateQueryRequest = (requests: IGraphQLRequest[]): string => {
     return `${queryHeader}{\n${queryFragments}}`;
 };
 
-const generateQueryHeader = (params: IGraphQLParam[]) => {
+const generateQueryHeader = (params: GraphQLParam[]) => {
     return `query(${collectHeaderParams(params)})`;
 };
 
-const collectHeaderParams = (params: IGraphQLParam[]): string => {
+const collectHeaderParams = (params: GraphQLParam[]): string => {
     return params.map(collectHeaderParam).join(',');
 };
 
-const collectHeaderParam = (param: IGraphQLParam): string => {
+const collectHeaderParam = (param: GraphQLParam): string => {
     if (!param.type) throw new Error('Missing required type for parameter');
 
     const useAlias = generateParameterAlias(param);
     return [useAlias, param.type].join(':');
 };
 
-const generateQueryFragments = (requests: IGraphQLRequest[]) => {
+const generateQueryFragments = (requests: GraphQLRequest[]) => {
     return requests.map(generateQueryFragment).join('\n');
 };
 
-const generateQueryFragment = (request: IGraphQLRequest): string => {
+const generateQueryFragment = (request: GraphQLRequest): string => {
     const {fragmentName, fragmentParams, fragmentFields} = request;
     const fragmentHeader = generateFragmentHeader(fragmentName, fragmentParams);
     const fragmentBody = generateFragmentFields(fragmentFields);
@@ -55,17 +55,17 @@ const generateQueryFragment = (request: IGraphQLRequest): string => {
     return `${fragmentHeader}{${fragmentBody}}`;
 };
 
-const generateFragmentHeader = (name: string, params: IGraphQLParam[] = []) => {
+const generateFragmentHeader = (name: string, params: GraphQLParam[] = []) => {
     let fragmentHeader: string = name;
     if (params.length) fragmentHeader += `(${generateFragmentParams(params)})`;
     return fragmentHeader;
 };
 
-const generateFragmentParams = (params: IGraphQLParam[]) => {
+const generateFragmentParams = (params: GraphQLParam[]) => {
     return params.map(collectFragmentParam);
 };
 
-const collectFragmentParam = (param: IGraphQLParam): string => {
+const collectFragmentParam = (param: GraphQLParam): string => {
     const useAlias = generateParameterAlias(param);
     return [param.name, useAlias].join(':');
 };
