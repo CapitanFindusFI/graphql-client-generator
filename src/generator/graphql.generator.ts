@@ -1,7 +1,7 @@
 import {IGraphQLParam, IGraphQLQueryRequest, IGraphQLRequest} from "../interfaces/graphql-request.interface";
 import {generateParameterAlias} from "../../tests/utils";
 import {GraphQLField} from "../types";
-import * as _ from "lodash";
+import {set} from 'lodash';
 
 abstract class GraphqlGenerator {
     protected requestTypeName: string;
@@ -79,7 +79,7 @@ abstract class GraphqlGenerator {
 
     private collectFieldsAsObject(fields: string[]): GraphQLField {
         return fields.reduce((object: object, field: string) => {
-            _.set(object, field, field);
+            set(object, field, field);
             return object;
         }, {});
     }
