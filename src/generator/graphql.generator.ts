@@ -10,12 +10,22 @@ abstract class GraphqlGenerator {
         this.requestTypeName = requestHeader;
     }
 
-    private validateRequests(request: IGraphQLRequest[]) {
-
+    private validateRequests(requests: IGraphQLRequest[]): void {
+        requests.forEach(GraphqlGenerator.validateRequest);
     }
 
-    private validateRequest(request: IGraphQLRequest) {
+    private static validateRequest(request: IGraphQLRequest): void {
+        const {fragmentParams, fragmentValues, fragmentName} = request;
+        if (Array.isArray(fragmentParams)) {
+            if (!fragmentValues) throw new Error(`request with name: ${fragmentName} has parameters but no values`);
+            const valueNames: string[] = Object.keys(fragmentValues);
+            const requestParamNames: string[] = fragmentParams.map(GraphqlGenerator.generateParameterAlias);
 
+            const missingValueNames: string[] = requestParamNames.filter((paramName: string) => valueNames.indexOf(paramName) === -1);
+            if (missingValueNames.length) {
+                throw new Error(`The following values are missing from the request:\n${missingValueNames.join('\n-')}`)
+            }
+        }
     }
 
     private static collectRequestsParameters(requests: IGraphQLRequest[]) {
@@ -103,6 +113,7 @@ abstract class GraphqlGenerator {
     }
 
     public generateRequestString(requests: IGraphQLRequest[]): string {
+        this.validateRequests(requests);
         const queryHeader = this.generateRequestHeader(requests);
         const queryFragments = this.generateRequestFragments(requests);
 
