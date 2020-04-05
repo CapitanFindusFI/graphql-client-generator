@@ -90,6 +90,8 @@ const generateFragmentFieldsString = (fieldsObject: GraphQLField) => {
             params.push(key, '{', ...generateFragmentFieldsString(value), '}');
         } else if (typeof (value) === 'string') {
             params.push(key);
+        } else {
+            throw new Error(`Unknown field: ${key}`)
         }
         return params;
     }, []);

@@ -13,7 +13,7 @@ abstract class GraphqlGenerator {
     private collectRequestParamters(requests: IGraphQLRequest[]) {
         return requests.reduce((params: IGraphQLParam[], request: IGraphQLQueryRequest) => {
             const {fragmentParams} = request;
-            if (!_.isUndefined(fragmentParams) && fragmentParams.length) {
+            if (Array.isArray(fragmentParams)) {
                 return params.concat(...fragmentParams);
             } else {
                 return params;
@@ -84,7 +84,7 @@ abstract class GraphqlGenerator {
         }, {});
     }
 
-    private generateFragmentFieldsString(fieldsObject: GraphQLField) {
+    private generateFragmentFieldsString(fieldsObject: GraphQLField): string[] {
         return Object.keys(fieldsObject).reduce((params: string[], key: string) => {
             const value: any = fieldsObject[key];
             if (typeof (value) === 'object') {
