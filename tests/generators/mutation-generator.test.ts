@@ -4,8 +4,8 @@ import GraphqlMutationGenerator from "../../src/generator/graphql-mutation.gener
 
 const generator = new GraphqlMutationGenerator();
 
-describe('query generator class test suite', () => {
-    it('should correctly create a graph query with a simple request without params', () => {
+describe('mutation generator class test suite', () => {
+    it('should correctly create a graph mutation with a simple request without params', () => {
         const requests: IGraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentFields: ['id', 'name', 'surname']
@@ -14,7 +14,7 @@ describe('query generator class test suite', () => {
         expect(query).toBe('mutation{\nusers{id name surname}}');
     });
 
-    it('should correctly generate a graph query with multiple fragments', () => {
+    it('should correctly generate a graph mutation with multiple fragments', () => {
         const requests: IGraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentFields: ['id', 'name', 'surname']
