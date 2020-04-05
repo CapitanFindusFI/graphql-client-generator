@@ -17,7 +17,9 @@ abstract class GraphqlGenerator {
     private static validateRequest(request: IGraphQLRequest): void {
         const {fragmentParams, fragmentValues, fragmentName} = request;
         if (Array.isArray(fragmentParams)) {
-            if (!fragmentValues) throw new Error(`request with name: ${fragmentName} has parameters but no values`);
+            if (!fragmentValues) {
+                throw new Error(`request with name: ${fragmentName} has parameters but no values`);
+            }
             const valueNames: string[] = Object.keys(fragmentValues);
             const requestParamNames: string[] = fragmentParams.map(GraphqlGenerator.generateParameterAlias);
 
