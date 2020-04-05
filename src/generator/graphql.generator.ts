@@ -1,13 +1,13 @@
 import {IGraphQLParam, IGraphQLQueryRequest, IGraphQLRequest} from "../interfaces/graphql-request.interface";
 import {generateParameterAlias} from "../../tests/utils";
-import {GraphQLField} from "../types";
+import {GraphQLField, GraphQLRequestType} from "../types";
 import {set} from 'lodash';
 
 abstract class GraphqlGenerator {
-    protected requestTypeName: string;
+    protected requestTypeName: GraphQLRequestType;
 
-    protected constructor(requestHeader: string) {
-        this.requestTypeName = requestHeader;
+    protected constructor(requestTypeName: GraphQLRequestType) {
+        this.requestTypeName = requestTypeName;
     }
 
     private validateRequests(requests: IGraphQLRequest[]): void {

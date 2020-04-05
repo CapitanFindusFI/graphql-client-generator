@@ -2,7 +2,7 @@ import GraphqlGenerator from "./graphql.generator";
 
 class GraphqlQueryGenerator extends GraphqlGenerator {
     constructor() {
-        super('query');
+        super("query");
     }
 }
 
