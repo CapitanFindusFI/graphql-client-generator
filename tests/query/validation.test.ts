@@ -10,7 +10,7 @@ describe('query generator error test suite', () => {
                 type: 'String',
                 name: ''
             }],
-            fragmentFields: ['name','surname']
+            fragmentFields: ['name', 'surname']
         }];
 
         expect(() => generateQueryRequest(requests)).toThrow(Error);
@@ -24,7 +24,7 @@ describe('query generator error test suite', () => {
                 type: '',
                 name: 'id'
             }],
-            fragmentFields: ['name','surname']
+            fragmentFields: ['name', 'surname']
         }];
 
         expect(() => generateQueryRequest(requests)).toThrow(Error);
