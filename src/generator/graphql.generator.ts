@@ -5,15 +5,13 @@ import * as _ from "lodash";
 
 abstract class GraphqlGenerator {
     protected requestTypeName: string;
-    protected requests: IGraphQLRequest[];
 
-    protected constructor(requestHeader: string, requests: IGraphQLRequest[]) {
+    protected constructor(requestHeader: string) {
         this.requestTypeName = requestHeader;
-        this.requests = requests;
     }
 
-    private collectRequestParamters() {
-        return this.requests.reduce((params: IGraphQLParam[], request: IGraphQLQueryRequest) => {
+    private collectRequestParamters(requests: IGraphQLRequest[]) {
+        return requests.reduce((params: IGraphQLParam[], request: IGraphQLQueryRequest) => {
             const {fragmentParams} = request;
             if (!_.isUndefined(fragmentParams) && fragmentParams.length) {
                 return params.concat(...fragmentParams);
@@ -31,7 +29,9 @@ abstract class GraphqlGenerator {
     }
 
     private generateRequestHeader(params: IGraphQLParam[]): string {
-        return `${this.requestTypeName}(${GraphqlGenerator.collectHeaderParams(params)})`;
+        let requestHeader = this.requestTypeName;
+        if (params.length) requestHeader += `(${GraphqlGenerator.collectHeaderParams(params)})`;
+        return requestHeader;
     }
 
     private static collectHeaderParams(params: IGraphQLParam[]): string {
@@ -44,8 +44,8 @@ abstract class GraphqlGenerator {
         return [useAlias, param.type].join(':');
     }
 
-    private generateRequestFragments() {
-        return this.requests.map(this.generateRequestFragment.bind(this)).join('\n');
+    private generateRequestFragments(requests: IGraphQLRequest[]) {
+        return requests.map(this.generateRequestFragment.bind(this)).join('\n');
     }
 
     private generateRequestFragment(request: IGraphQLRequest): string {
@@ -96,10 +96,10 @@ abstract class GraphqlGenerator {
         }, []);
     }
 
-    public generateRequestString(): string {
-        const requestParams = this.collectRequestParamters();
+    public generateRequestString(requests: IGraphQLRequest[]): string {
+        const requestParams = this.collectRequestParamters(requests);
         const queryHeader = this.generateRequestHeader(requestParams);
-        const queryFragments = this.generateRequestFragments();
+        const queryFragments = this.generateRequestFragments(requests);
 
         return `${queryHeader}{\n${queryFragments}}`;
     }
