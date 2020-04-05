@@ -1,5 +1,6 @@
 import {IGraphQLRequest} from "../../src/interfaces/graphql-request.interface";
 import GraphqlQueryGenerator from "../../src/generator/graphql-query.generator";
+import {ValidationError} from "../../src/exceptions/validation.error";
 
 const generator = new GraphqlQueryGenerator();
 
@@ -26,6 +27,21 @@ describe('query generator class test suite', () => {
     });
 
     it('should throw an error for incorrect values', () => {
+        const requests: IGraphQLRequest[] = [{
+            fragmentName: 'users',
+            fragmentParams: [{
+                alias: '$id',
+                type: 'String',
+                name: 'id'
+            }],
+            fragmentFields: ['name', 'surname'],
+            fragmentValues: {}
+        }];
+
+        expect(() => generator.generateRequestString(requests)).toThrow(ValidationError);
+    });
+
+    it('should throw an error for missing values', () => {
         const requests: IGraphQLRequest[] = [{
             fragmentName: 'users',
             fragmentParams: [{

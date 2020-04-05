@@ -1,10 +1,10 @@
-import {GraphQLField} from "../types";
+import {GraphQLValue} from "../types";
 
 export interface IGraphQLRequest {
     fragmentName: string;
     fragmentParams?: IGraphQLParam[];
     fragmentFields: string[];
-    fragmentValues?: GraphQLField;
+    fragmentValues?: GraphQLValue;
 }
 
 export interface IGraphQLParam {
@@ -16,10 +16,10 @@ export interface IGraphQLParam {
 export interface IGraphQLQueryRequest extends IGraphQLRequest {
     fragmentParams?: IGraphQLParam[];
     fragmentFields: string[];
-    fragmentValues?: GraphQLField;
+    fragmentValues?: GraphQLValue;
 }
 
 export interface IGraphQLMutationRequest extends IGraphQLRequest {
     fragmentParams?: IGraphQLParam[];
-    fragmentValues?: GraphQLField;
+    fragmentValues?: GraphQLValue;
 }

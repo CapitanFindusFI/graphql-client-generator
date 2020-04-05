@@ -17,16 +17,17 @@ abstract class GraphqlGenerator {
 
     private static validateRequest(request: IGraphQLRequest): void {
         const {fragmentParams, fragmentValues, fragmentName} = request;
-        if (Array.isArray(fragmentParams)) {
-            if (!fragmentValues) {
+        if (Array.isArray(fragmentParams) && typeof (fragmentValues) === 'object') {
+            const valueNames: string[] = Object.keys(fragmentValues);
+            if (!valueNames.length) {
                 throw new ValidationError(`request with name: ${fragmentName} has parameters but no values`);
             }
-            const valueNames: string[] = Object.keys(fragmentValues);
+
             const requestParamNames: string[] = fragmentParams.map(GraphqlGenerator.generateParameterAlias);
 
             const missingValueNames: string[] = requestParamNames.filter((paramName: string) => {
-                if (valueNames.indexOf(paramName) === -1) return false;
-                if (!fragmentValues[paramName]) return false;
+                if (valueNames.indexOf(paramName) === -1) return true;
+                if (!fragmentValues[paramName]) return true;
             });
             if (missingValueNames.length) {
                 throw new Error(`The following values are missing from the request:\n${missingValueNames.join('\n-')}`)
