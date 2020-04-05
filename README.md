@@ -1,4 +1,6 @@
 # GraphQL Request generator
+[![codecov](https://codecov.io/gh/CapitanFindusFI/graphql-client-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/CapitanFindusFI/graphql-client-generator)
+
 Utility class to generate GraphQL queries or mutations to be tested or used with an API client
 
 ### The GraphQLRequest interface
