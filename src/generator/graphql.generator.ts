@@ -2,6 +2,7 @@ import {IGraphQLParam, IGraphQLQueryRequest, IGraphQLRequest} from "../interface
 import {generateParameterAlias} from "../../tests/utils";
 import {GraphQLField, GraphQLRequestType} from "../types";
 import {set} from 'lodash';
+import {ValidationError} from "../exceptions/validation.error";
 
 abstract class GraphqlGenerator {
     protected requestTypeName: GraphQLRequestType;
@@ -18,7 +19,7 @@ abstract class GraphqlGenerator {
         const {fragmentParams, fragmentValues, fragmentName} = request;
         if (Array.isArray(fragmentParams)) {
             if (!fragmentValues) {
-                throw new Error(`request with name: ${fragmentName} has parameters but no values`);
+                throw new ValidationError(`request with name: ${fragmentName} has parameters but no values`);
             }
             const valueNames: string[] = Object.keys(fragmentValues);
             const requestParamNames: string[] = fragmentParams.map(GraphqlGenerator.generateParameterAlias);
@@ -41,7 +42,7 @@ abstract class GraphqlGenerator {
 
     private static generateParameterAlias(param: IGraphQLParam) {
         const {name, alias} = param;
-        if (!name) throw new Error('Missing required param name');
+        if (!name) throw new ValidationError('Missing required param name');
 
         return alias ? alias : `$${name}`;
     }
@@ -58,7 +59,7 @@ abstract class GraphqlGenerator {
     }
 
     private static collectHeaderParam(param: IGraphQLParam): string {
-        if (!param.type) throw new Error('Missing required param');
+        if (!param.type) throw new ValidationError('Missing required param type');
         const useAlias = GraphqlGenerator.generateParameterAlias(param);
         return [useAlias, param.type].join(':');
     }
