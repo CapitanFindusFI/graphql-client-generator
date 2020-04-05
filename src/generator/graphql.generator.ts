@@ -10,14 +10,17 @@ abstract class GraphqlGenerator {
         this.requestTypeName = requestHeader;
     }
 
-    private collectRequestParamters(requests: IGraphQLRequest[]) {
+    private validateRequests(request: IGraphQLRequest[]) {
+
+    }
+
+    private validateRequest(request: IGraphQLRequest) {
+
+    }
+
+    private static collectRequestsParameters(requests: IGraphQLRequest[]) {
         return requests.reduce((params: IGraphQLParam[], request: IGraphQLQueryRequest) => {
-            const {fragmentParams} = request;
-            if (Array.isArray(fragmentParams)) {
-                return params.concat(...fragmentParams);
-            } else {
-                return params;
-            }
+            return params.concat(request.fragmentParams || []);
         }, []);
     }
 
@@ -28,7 +31,8 @@ abstract class GraphqlGenerator {
         return alias ? alias : `$${name}`;
     }
 
-    private generateRequestHeader(params: IGraphQLParam[]): string {
+    private generateRequestHeader(requests: IGraphQLRequest[]): string {
+        const params = GraphqlGenerator.collectRequestsParameters(requests);
         let requestHeader = this.requestTypeName;
         if (params.length) requestHeader += `(${GraphqlGenerator.collectHeaderParams(params)})`;
         return requestHeader;
@@ -91,14 +95,15 @@ abstract class GraphqlGenerator {
                 params.push(key, '{', ...this.generateFragmentFieldsString(value), '}');
             } else if (typeof (value) === 'string') {
                 params.push(key);
+            } else {
+                throw new TypeError(`Unknown field type for: ${key}`)
             }
             return params;
         }, []);
     }
 
     public generateRequestString(requests: IGraphQLRequest[]): string {
-        const requestParams = this.collectRequestParamters(requests);
-        const queryHeader = this.generateRequestHeader(requestParams);
+        const queryHeader = this.generateRequestHeader(requests);
         const queryFragments = this.generateRequestFragments(requests);
 
         return `${queryHeader}{\n${queryFragments}}`;
