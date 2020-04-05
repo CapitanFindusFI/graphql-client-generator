@@ -7,8 +7,8 @@
     ],
     "declaration": true,
     "outDir": "./lib",
-    "strict": true,
-    "downlevelIteration": true
+    "noImplicitAny": true,
+    "strict": true
   },
   "include": [
     "./src"

@@ -1,8 +1,9 @@
-import {IGraphQLParam, IGraphQLQueryRequest} from "../../src/interfaces/graphql-request.interface";
+import {IGraphQLParam, IGraphQLRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLField} from "../../src/types";
 import _ = require('lodash');
 
-const extractRequestsParameters = (requests: IGraphQLQueryRequest[]) => {
-    return requests.reduce((params: IGraphQLParam[], request: IGraphQLQueryRequest) => {
+const extractRequestsParameters = (requests: IGraphQLRequest[]) => {
+    return requests.reduce((params: IGraphQLParam[], request: IGraphQLRequest) => {
         const {fragmentParams} = request;
         if (!_.isUndefined(fragmentParams) && fragmentParams.length) {
             return params.concat(...fragmentParams);
@@ -19,7 +20,7 @@ const generateParameterAlias = (param: IGraphQLParam) => {
     return alias ? alias : `$${name}`;
 };
 
-const generateQueryRequest = (requests: IGraphQLQueryRequest[]): string => {
+const generateQueryRequest = (requests: IGraphQLRequest[]): string => {
     const requestParams = extractRequestsParameters(requests);
     const queryHeader = generateQueryHeader(requestParams);
     const queryFragments = generateQueryFragments(requests);
@@ -42,11 +43,11 @@ const collectHeaderParam = (param: IGraphQLParam): string => {
     return [useAlias, param.type].join(':');
 };
 
-const generateQueryFragments = (requests: IGraphQLQueryRequest[]) => {
+const generateQueryFragments = (requests: IGraphQLRequest[]) => {
     return requests.map(generateQueryFragment).join('\n');
 };
 
-const generateQueryFragment = (request: IGraphQLQueryRequest): string => {
+const generateQueryFragment = (request: IGraphQLRequest): string => {
     const {fragmentName, fragmentParams, fragmentFields} = request;
     const fragmentHeader = generateFragmentHeader(fragmentName, fragmentParams);
     const fragmentBody = generateFragmentFields(fragmentFields);
@@ -69,26 +70,29 @@ const collectFragmentParam = (param: IGraphQLParam): string => {
     return [param.name, useAlias].join(':');
 };
 
-const generateFragmentFields = (fields: string[]) => {
-    const fieldsObject: object = {};
-    fields.forEach(field => _.set(fieldsObject, field, field));
-
-    const fieldsList = unwrapItem(fieldsObject);
-
-    return fieldsList.join(' ');
+const generateFragmentFields = (fields: string[]): string => {
+    const fieldsObject: GraphQLField = collectFieldsAsObject(fields);
+    const fragmentBodyComponents: string[] = generateFragmentFieldsString(fieldsObject);
+    return fragmentBodyComponents.join(' ');
 };
 
-const unwrapItem = (item: any): string[] => {
-    let unwrappedQuery: string[] = [];
-    Object.keys(item).forEach((key: string) => {
-        const itemValue: any = item[key];
-        if (_.isObject(itemValue)) {
-            unwrappedQuery = unwrappedQuery.concat(key, '{', unwrapItem(itemValue), '}');
-        } else {
-            unwrappedQuery.push(key);
+const collectFieldsAsObject = (fields: string[]): GraphQLField => {
+    return fields.reduce((object: object, field: string) => {
+        _.set(object, field, field);
+        return object;
+    }, {});
+};
+
+const generateFragmentFieldsString = (fieldsObject: GraphQLField) => {
+    return Object.keys(fieldsObject).reduce((params: string[], key: string) => {
+        const value: any = fieldsObject[key];
+        if (typeof (value) === 'object') {
+            params.push(key, '{', ...generateFragmentFieldsString(value), '}');
+        } else if (typeof (value) === 'string') {
+            params.push(key);
         }
-    });
-    return unwrappedQuery;
+        return params;
+    }, []);
 };
 
 export {
@@ -102,5 +106,5 @@ export {
     generateQueryFragments,
     collectFragmentParam,
     generateFragmentFields,
-    unwrapItem
+    generateFragmentFieldsString
 }

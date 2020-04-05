@@ -1,5 +1,8 @@
 export interface IGraphQLRequest {
     fragmentName: string;
+    fragmentParams?: IGraphQLParam[];
+    fragmentFields: string[];
+    fragmentValues?: object;
 }
 
 export interface IGraphQLParam {
