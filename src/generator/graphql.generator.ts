@@ -24,8 +24,8 @@ abstract class GraphqlGenerator {
             const requestParamNames: string[] = fragmentParams.map(GraphqlGenerator.generateParameterAlias);
 
             const missingValueNames: string[] = requestParamNames.filter((paramName: string) => {
-                if(valueNames.indexOf(paramName) === -1) return false;
-                if(!fragmentValues[paramName]) return false;
+                if (valueNames.indexOf(paramName) === -1) return false;
+                if (!fragmentValues[paramName]) return false;
             });
             if (missingValueNames.length) {
                 throw new Error(`The following values are missing from the request:\n${missingValueNames.join('\n-')}`)
