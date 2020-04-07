@@ -5,14 +5,14 @@ Utility class to generate GraphQL queries or mutations to be tested or used with
 
 ### The GraphQLRequest interface
 Classes are using an array of `GraphQLRequest` objects, structured as following
-```
+```typescript
 type GraphQLValueItem = string | number | boolean | object;
 type GraphQLValue = { [k: string]: GraphQLValueItem };
 
 interface GraphQLRequest {
     fragmentName: string;
     fragmentParams?: GraphQLParam[];
-    fragmentFields: string[];
+    fragmentFields?: string[];
     fragmentValues?: GraphQLValue;
 }
 
@@ -26,15 +26,14 @@ interface GraphQLParam {
 ### GraphQLGenerator
 
 The `GraphQLGenerator` class will do all of the syntax checking and values-compliance based on passed params. For example
-```
+```typescript
 const request: IGraphQLRequest = {
     fragmentName: 'createUser',
     fragmentFields: ['id','name','surname'],
     fragmentParams:[{
         name:'user',
         type:'UserInput'
-    }],
-    fragmentValues: {}
+    }]
 }
 ```
 
@@ -44,7 +43,7 @@ Not providing `$user` inside `fragmentValues` object will throw a ValidationErro
 
 Consider the following input
 
-```
+```typescript
 const requests: IGraphQLRequest[] = [{
     fragmentName: 'users',
     fragmentFields: ['id', 'name', 'surname'],
@@ -60,7 +59,7 @@ const requests: IGraphQLRequest[] = [{
 
 ##### Query Generator
 With a `GraphqlQueryGenerator` class, will produce the following output
-```
+```typescript
 const generator = new GraphqlQueryGenerator()
 const query = generator.generateRequestString(requests);
 
@@ -77,7 +76,7 @@ query($id:String) {
 ##### Mutation Generator
 
 With a `GraphqlMutationGenerator` class, will produce the following output
-```
+```typescript
 const generator = new GraphqlMutationGenerator()
 const query = generator.generateRequestString(requests);
 
