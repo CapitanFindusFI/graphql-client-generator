@@ -70,11 +70,21 @@ abstract class GraphqlGenerator {
     }
 
     private generateRequestFragment(request: GraphQLRequest): string {
+        let fragmentString = '';
         const {fragmentName, fragmentParams, fragmentFields} = request;
         const fragmentHeader = GraphqlGenerator.generateFragmentHeader(fragmentName, fragmentParams);
-        const fragmentBody = this.generateFragmentBody(fragmentFields);
+        fragmentString += fragmentHeader;
+        if (fragmentFields) {
+            if (!Array.isArray(fragmentFields)) {
+                throw new Error('Fields must be an array')
+            }
+            if (fragmentFields.length) {
+                const fragmentBody = this.generateFragmentBody(fragmentFields);
+                fragmentString += `{${fragmentBody}}`;
+            }
+        }
 
-        return `${fragmentHeader}{${fragmentBody}}`;
+        return fragmentString
     }
 
     private static generateFragmentHeader(name: string, params: GraphQLParam[] = []): string {

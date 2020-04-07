@@ -48,11 +48,16 @@ const generateQueryFragments = (requests: GraphQLRequest[]) => {
 };
 
 const generateQueryFragment = (request: GraphQLRequest): string => {
+    let fragmentString: string = '';
     const {fragmentName, fragmentParams, fragmentFields} = request;
     const fragmentHeader = generateFragmentHeader(fragmentName, fragmentParams);
-    const fragmentBody = generateFragmentFields(fragmentFields);
+    fragmentString += fragmentHeader;
+    if (fragmentFields && fragmentFields.length) {
+        const fragmentBody = generateFragmentFields(fragmentFields);
+        fragmentString += `{${fragmentBody}}`;
+    }
 
-    return `${fragmentHeader}{${fragmentBody}}`;
+    return fragmentString
 };
 
 const generateFragmentHeader = (name: string, params: GraphQLParam[] = []) => {

@@ -18,13 +18,11 @@ describe('query fragments generator test suite', () => {
 
     it('should correctly generate multiple fragment headers', () => {
         const requests: GraphQLQueryRequest[] = [{
-            fragmentName: 'users',
-            fragmentFields: []
+            fragmentName: 'users'
         }, {
-            fragmentName: 'accounts',
-            fragmentFields: []
+            fragmentName: 'accounts'
         }];
         const fragment = generateQueryFragments(requests);
-        expect(fragment).toBe('users{}\naccounts{}');
+        expect(fragment).toBe('users\naccounts');
     })
 });

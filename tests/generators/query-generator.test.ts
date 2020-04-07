@@ -5,6 +5,14 @@ import {ValidationError} from "../../src/exceptions/validation.error";
 const generator = new GraphqlQueryGenerator();
 
 describe('query generator class test suite', () => {
+    it('should correctly generate a graph query without fields to retrieve', () => {
+        const requests: GraphQLRequest[] = [{
+            fragmentName: 'time'
+        }];
+        const query: string = generator.generateRequestString(requests);
+        expect(query).toBe('query{\ntime}');
+    });
+
     it('should correctly create a graph query with a simple request without params', () => {
         const requests: GraphQLRequest[] = [{
             fragmentName: 'users',

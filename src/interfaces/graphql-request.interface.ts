@@ -3,7 +3,7 @@ import {GraphQLValue} from "../types";
 export interface GraphQLRequest {
     fragmentName: string;
     fragmentParams?: GraphQLParam[];
-    fragmentFields: string[];
+    fragmentFields?: string[];
     fragmentValues?: GraphQLValue;
 }
 
@@ -15,7 +15,7 @@ export interface GraphQLParam {
 
 export interface GraphQLQueryRequest extends GraphQLRequest {
     fragmentParams?: GraphQLParam[];
-    fragmentFields: string[];
+    fragmentFields?: string[];
     fragmentValues?: GraphQLValue;
 }
 
