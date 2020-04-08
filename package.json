@@ -1,6 +1,6 @@
 {
   "name": "graphql-request-generator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Utility class to generate GraphQL queries or mutations to be used within an API client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
