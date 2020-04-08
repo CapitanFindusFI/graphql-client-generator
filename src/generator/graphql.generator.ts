@@ -23,7 +23,7 @@ abstract class GraphqlGenerator {
                 throw new ValidationError(`request with name: ${fragmentName} has parameters but no values`);
             }
 
-            const requestParamNames: string[] = fragmentParams.map(GraphqlGenerator.generateParameterAlias);
+            const requestParamNames: string[] = fragmentParams.map((param: GraphQLParam) => param.name);
 
             const missingValueNames: string[] = requestParamNames.filter((paramName: string) => {
                 if (valueNames.indexOf(paramName) === -1) return true;

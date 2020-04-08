@@ -59,7 +59,7 @@ describe('query generator class test suite', () => {
             }],
             fragmentFields: ['name', 'surname'],
             fragmentValues: {
-                id: '123'
+                $id: '123'
             }
         }];
 
