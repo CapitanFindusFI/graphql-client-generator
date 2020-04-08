@@ -1,4 +1,4 @@
-import GraphqlGenerator = require("./graphql.generator");
+import GraphqlGenerator from "./graphql.generator";
 
 class GraphqlQueryGenerator extends GraphqlGenerator {
     constructor() {

@@ -135,4 +135,4 @@ abstract class GraphqlGenerator {
     }
 }
 
-export = GraphqlGenerator;
+export default GraphqlGenerator;
