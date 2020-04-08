@@ -1,5 +1,4 @@
 import {GraphQLParam, GraphQLQueryRequest, GraphQLRequest} from "../interfaces/graphql-request.interface";
-import {generateParameterAlias} from "../../tests/utils";
 import {GraphQLField, GraphQLRequestType} from "../types";
 import {set} from 'lodash';
 import {ValidationError} from "../exceptions/validation.error";
@@ -98,7 +97,7 @@ abstract class GraphqlGenerator {
     }
 
     private static generateFragmentHeaderParam(param: GraphQLParam): string {
-        const useAlias = generateParameterAlias(param);
+        const useAlias = GraphqlGenerator.generateParameterAlias(param);
         return [param.name, useAlias].join(':');
     }
 
