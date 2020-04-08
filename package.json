@@ -1,6 +1,6 @@
 {
   "name": "graphql-request-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility class to generate GraphQL queries or mutations to be used within an API client",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
+    "version": "git add -A src",
     "postversion": "git push && git push --tags"
   },
   "repository": {
