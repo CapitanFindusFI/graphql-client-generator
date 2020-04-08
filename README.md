@@ -37,7 +37,7 @@ const request: IGraphQLRequest = {
 }
 ```
 
-Not providing `$user` inside `fragmentValues` object will throw a ValidationError
+Not providing `user` inside `fragmentValues` object will throw a ValidationError
 
 #### Generation
 
@@ -52,7 +52,7 @@ const requests: IGraphQLRequest[] = [{
         type: 'String'
     }],
     fragmentValues: {
-        $id: "123"
+        id: "123"
     }
 }];
 ```
