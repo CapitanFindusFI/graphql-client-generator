@@ -2,8 +2,8 @@
   "name": "graphql-request-generator",
   "version": "1.0.3",
   "description": "Utility class to generate GraphQL queries or mutations to be used within an API client",
-  "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint '*/**/*.{js,ts,tsx}'",
     "test": "jest --config jestconfig.json",

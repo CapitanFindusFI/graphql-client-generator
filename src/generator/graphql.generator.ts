@@ -1,4 +1,4 @@
-import {GraphQLParam, GraphQLQueryRequest, GraphQLRequest} from "../interfaces/graphql-request.interface";
+import {GraphQLParam, GraphQLRequest} from "../interfaces/graphql-request.interface";
 import {GraphQLField, GraphQLRequestType} from "../types";
 import {set} from 'lodash';
 import {ValidationError} from "../exceptions/validation.error";
@@ -35,7 +35,7 @@ abstract class GraphqlGenerator {
     }
 
     private static collectRequestsParameters(requests: GraphQLRequest[]): GraphQLParam[] {
-        return requests.reduce((params: GraphQLParam[], request: GraphQLQueryRequest) => {
+        return requests.reduce((params: GraphQLParam[], request: GraphQLRequest) => {
             return params.concat(request.fragmentParams || []);
         }, []);
     }
@@ -135,4 +135,4 @@ abstract class GraphqlGenerator {
     }
 }
 
-export default GraphqlGenerator;
+export = GraphqlGenerator;

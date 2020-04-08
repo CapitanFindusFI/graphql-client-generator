@@ -12,14 +12,3 @@ export interface GraphQLParam {
     alias?: string;
     type: string;
 }
-
-export interface GraphQLQueryRequest extends GraphQLRequest {
-    fragmentParams?: GraphQLParam[];
-    fragmentFields?: string[];
-    fragmentValues?: GraphQLValue;
-}
-
-export interface GraphQLMutationRequest extends GraphQLRequest {
-    fragmentParams?: GraphQLParam[];
-    fragmentValues?: GraphQLValue;
-}

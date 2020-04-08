@@ -6,11 +6,12 @@
       "es2015"
     ],
     "declaration": true,
-    "outDir": "./lib",
+    "outDir": "lib",
     "noImplicitAny": true,
     "strict": true
   },
   "exclude": [
+    "lib",
     "node_modules",
     "tests"
   ]
