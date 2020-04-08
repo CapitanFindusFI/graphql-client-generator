@@ -46,7 +46,7 @@ describe('query generator class test suite', () => {
             fragmentValues: {}
         }];
 
-        expect(() => generator.generateRequestString(requests)).toThrow(ValidationError);
+        expect(() => generator.generateRequestString(requests)).toThrow(Error);
     });
 
     it('should throw an error for missing values', () => {

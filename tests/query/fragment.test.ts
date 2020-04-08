@@ -1,4 +1,4 @@
-import {GraphQLParam, GraphQLQueryRequest} from "../../src/interfaces/graphql-request.interface";
+import {GraphQLParam, GraphQLRequest} from "../../src/interfaces/graphql-request.interface";
 import {generateFragmentHeader, generateQueryFragments} from "../utils";
 
 describe('query fragments generator test suite', () => {
@@ -17,7 +17,7 @@ describe('query fragments generator test suite', () => {
     });
 
     it('should correctly generate multiple fragment headers', () => {
-        const requests: GraphQLQueryRequest[] = [{
+        const requests: GraphQLRequest[] = [{
             fragmentName: 'users'
         }, {
             fragmentName: 'accounts'
